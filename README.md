@@ -1,0 +1,4 @@
+angularFastClick
+================
+
+Fast Click Directive
