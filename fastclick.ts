@@ -19,6 +19,12 @@ class EventsCollection {
   public addEventListener(type:string, callback) {
     this.events.push(new EventListenerWrapper(this.element, type, callback));
   }
+
+  public destroy() {
+    angular.forEach(this.events, function (event: EventListenerWrapper) {
+      event.destroy();
+    });
+  }
 }
 
 class ClickBuster {
@@ -29,7 +35,7 @@ class ClickBuster {
 
   // Call preventGhostClick to bust all click events that happen within
   // 25px of the provided x, y coordinates in the next 2.5s.
-  public preventGhostClick(clientX, clientY) {
+  public preventGhostClick(clientX: number, clientY: number) {
     this.coordinates.push({
       clientX: clientX,
       clientY: clientY
@@ -45,7 +51,7 @@ class ClickBuster {
   // If we catch a click event inside the given radius and time threshold
   // then we call stopPropagation and preventDefault. Calling preventDefault
   // will stop links from being activated.
-  onClick(event) {
+  onClick(event: JQueryEventObject) {
     var coordinatesIndex = 0;
 
     angular.forEach(this.coordinates, function (coordinate) {
@@ -93,7 +99,7 @@ class FastClick {
     }
   }
 
-  public onClick(event) {
+  public onClick(event: JQueryEventObject) {
     event.stopPropagation();
 
     this.reset();
